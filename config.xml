@@ -4,7 +4,7 @@
   <description>
         An Ionic Framework and Cordova project.
     </description>
-  <icon src="res/icon.png" />
+  <icon src="res/icon.png"/>
   <author email="conner@connerfullerton.com" href="http://connerfullerton.com">
       Conner Fullerton
     </author>
@@ -18,4 +18,7 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+  <platform name="ios">
+    <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
+  </platform>
 </widget>

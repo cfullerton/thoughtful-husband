@@ -1,11 +1,11 @@
 angular.module('app.controllers', [])
   
 .controller('reminderCtrl', function($scope,$rootScope,Reminders,$cordovaLocalNotification) {
- let storage = new Storage(SqlStorage); //let storage = new Storage();
- storage.get('storedPreferences').then((storedPreferences) => {
-		if (storedPreferences){
+ //let storage = new Storage(SqlStorage); //let storage = new Storage();
+ /*storage.get('storedPreferences').then((storedPreferences) => {
+		if (storedPreferences){ 
 			$rootScope.preferences = storedPreferences;
-		}else{  
+		}else{  */
 			$rootScope.preferences = {
                 frequency:8,
 				bio: {
@@ -44,9 +44,9 @@ angular.module('app.controllers', [])
 			$rootScope.preferences.ideas.takeKids.enabled = $rootScope.preferences.bio.kids;
 			$rootScope.preferences.ideas.workGift.enabled = $rootScope.preferences.bio.sheWorks;
 			console.log($rootScope.preferences)
-			storage.set('storedPreferences', 'preferences');
-		}
-});
+			//storage.set('storedPreferences', 'preferences');
+		//}
+//});
         $scope.add =    function() {
         console.log("ffs");
 		var frequency = 8; //needs to equal data object frequency
@@ -54,22 +54,23 @@ angular.module('app.controllers', [])
 		
 		for (var i=0;i<1;i++){ // 1 notification for dev
         var alarmTime = new Date();
-		var ideaNum = Math.floor(Math.random() * 10); //needs to be dataObject.ideas.length
+        var ideaKeys = Object.keys($rootScope.preferences.ideas);
+		var ideaNum = Math.floor(Math.random() * ideaKeys.length); 
         notificationID++;
 		//alarmTime.setMinutes(alarmTime.getMinutes() + 60*24*(30/frequency)*notificationID);
         alarmTime.setMinutes(alarmTime.getMinutes() + 1) // 1 min for dev    
 		$cordovaLocalNotification.clear(notificationID);
-        console.log($cordovaLocalNotification);
         $cordovaLocalNotification.add({
             id: notificationID,
             date: alarmTime,
-            message: "This is a message",
+            message: $rootScope.preferences.ideas[ideaKeys[ideaNum]].content,
             title: "Time for a thoughtful action",
             autoCancel: true,
             sound: null
         }).then(function () {
             console.log("The notification has been set");
-        });
+        }); 
+        //console.log($rootScope.preferences.ideas[ideaKeys[ideaNum]].content);
 		}
 }
 $scope.activate = function(){
