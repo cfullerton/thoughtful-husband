@@ -1,14 +1,23 @@
 <ion-view title="Reminder" hide-back-button="true" id="page2" style="background-color:##F7F7F7;">
     <ion-content padding="true" scroll="false" class="has-header">
+        <ion-item class="range range-positive" ng-model="preferences.frequency">Reminder Frequency
+                <input type="range" value="8" min="4" max="15" name="frequnecy">
+            </ion-item>
         <div class="list card">
-            <div class="item item-divider">Next Reminder:</div>
-            <div class="item item-body"></div>
+            <div class="item item-divider">Previous Reminder:</div>
+            <div class="item item-body">You haven't had a Reminder yet</div>
         </div>
-        <button id="reminder-button1" class="button button-positive  button-block">Skip this one!</button>
-        <button id="reminder-button2" class="button button-positive  button-block">Replace this one!</button>
-        <button id="reminder-button3" class="button button-positive  button-block">Don't use this idea again!</button>
+                <button id="reminder-button3" class="button button-positive  button-block">Don't use this idea again!</button>
         <div class="spacer" style="width: 300px; height: 34px;"></div>
-        <button id="reminder-button7" class="button button-assertive  button-block">Activate!</button>
+        <form class="list">
+            
+            <label class="item item-input">
+                <input type="text" placeholder="Add an idea" ng-model="ideaText">
+            </label>
+        </form>
+        <button id="preferences-button5" class="button button-positive  button-block" ng-click="addIdea(ideaText); ideaText=''">Add idea!</button>
+        <div class="spacer" style="width: 300px; height: 34px;"></div>
+        <button id="reminder-button7" ng-click="activate()" class="button button-assertive  button-block">Activate!</button>
         <div id="reminder-markdown2" style="color:#000000;">
             <p>Choose some options in the bio section. When you are ready for me to generate some reminders click Actitivate!</p>
         </div>
