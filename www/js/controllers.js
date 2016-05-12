@@ -7,6 +7,7 @@ angular.module('app.controllers', [])
 			$rootScope.preferences = storedPreferences;
 		}else{  
 			$rootScope.preferences = {
+            active: false,
                 frequency:8,
 				bio: {
 					kids:true,
@@ -47,7 +48,8 @@ angular.module('app.controllers', [])
             
 		}
 $scope.activate = function(){
-    Reminders.add(); 
+    Reminders.add();
+    $rootScope.preferences.active = true;
 }
             $scope.ideaText = "";
 $scope.addIdea = function(ideaText){
@@ -58,7 +60,7 @@ $scope.addIdea = function(ideaText){
             customID = i;
             break;
         }
-        if (i =999){
+        if (i ==999){
             alert("Custom Idea limit is 999, this idea will overwrite the first one");
         }
     }

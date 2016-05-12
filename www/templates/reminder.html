@@ -3,12 +3,7 @@
         <ion-item class="range range-positive" ng-model="preferences.frequency">Reminder Frequency
                 <input type="range" value="8" min="4" max="15" name="frequnecy">
             </ion-item>
-        <div class="list card">
-            <div class="item item-divider">Previous Reminder:</div>
-            <div class="item item-body">You haven't had a Reminder yet</div>
-        </div>
-                <button id="reminder-button3" class="button button-positive  button-block">Don't use this idea again!</button>
-        <div class="spacer" style="width: 300px; height: 34px;"></div>
+       <div class="spacer" style="width: 300px; height: 34px;"></div>
         <form class="list">
             
             <label class="item item-input">
@@ -16,7 +11,7 @@
             </label>
         </form>
         <button id="preferences-button5" class="button button-positive  button-block" ng-click="addIdea(ideaText); ideaText=''">Add idea!</button>
-        <div class="spacer" style="width: 300px; height: 34px;"></div>
+        
         <button id="reminder-button7" ng-click="activate()" class="button button-assertive  button-block">Activate!</button>
         <div id="reminder-markdown2" style="color:#000000;">
             <p>Choose some options in the bio section. When you are ready for me to generate some reminders click Actitivate!</p>
