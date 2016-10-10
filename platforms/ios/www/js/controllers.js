@@ -1,6 +1,7 @@
 angular.module('app.controllers', [])
 
 .controller('reminderCtrl', function($scope, $rootScope, Reminders, $cordovaLocalNotification) {
+            $scope.promptMessage = "Tell me a little about your wife in the bio section. When you are ready for me to generate some reminders click Actitivate!";
             var storage = window.localStorage;
             var storedPreferences = JSON.parse(storage.getItem('storedPreferences'));
             if (storedPreferences) {
@@ -87,6 +88,7 @@ angular.module('app.controllers', [])
             
             }
             $scope.activate = function() {
+            $scope.promptMessage = "Reminders Activated! You should get a test reminder in a few minutes and periodic reminders at random times";
             Reminders.add();
             $rootScope.preferences.active = true;
             }
