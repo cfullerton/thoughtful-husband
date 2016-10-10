@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('reminderCtrl', function($scope, $rootScope, Reminders, $cordovaLocalNotification) {
+.controller('reminderCtrl', function($scope, $rootScope, Reminders, $cordovaLocalNotification, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, $http) {
             var storage = window.localStorage;
             var storedPreferences = JSON.parse(storage.getItem('storedPreferences'));
             if (storedPreferences) {
@@ -76,7 +76,7 @@ angular.module('app.controllers', [])
             content: "give her an uncomfortably long hug when you get home",
             enabled: true,
             },
-            
+
             }
             }
             }
@@ -84,15 +84,15 @@ angular.module('app.controllers', [])
             $rootScope.preferences.ideas.takeKids.enabled = $rootScope.preferences.bio.kids;
             $rootScope.preferences.ideas.workGift.enabled = $rootScope.preferences.bio.sheWorks;
             storage.setItem('storedPreferences', JSON.stringify($rootScope.preferences));
-            
+
             }
             $scope.activate = function() {
-            Reminders.add();
+            //Reminders.add();
             $rootScope.preferences.active = true;
             }
             $scope.ideaText = "";
             $scope.addIdea = function(ideaText) {
-            
+
             var customID = 0;
             for (var i = 0; i < 1000; i++) {
             if (!($rootScope.preferences.ideas['custom' + i])) {
@@ -108,6 +108,37 @@ angular.module('app.controllers', [])
             enabled: true,
             }
             }
+            $scope.register = function () {
+        var config = null;
+
+        if (ionic.Platform.isAndroid()) {
+            config = {
+                "senderID": "YOUR_GCM_PROJECT_ID" // REPLACE THIS WITH YOURS FROM GCM CONSOLE - also in the project URL like: https://console.developers.google.com/project/434205989073
+            };
+        }
+        else if (ionic.Platform.isIOS()) {
+            config = {
+                "badge": "true",
+                "sound": "true",
+                "alert": "true"
+            }
+        }
+
+        $cordovaPush.register(config).then(function (result) {
+            console.log("Register success " + result);
+
+            $cordovaToast.showShortCenter('Registered for push notifications');
+            $scope.registerDisabled=true;
+            // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
+            if (ionic.Platform.isIOS()) {
+                $scope.regId = result;
+                //storeDeviceToken("ios");
+            }
+        }, function (err) {
+            console.log("Register error " + err)
+        });
+    }
+
             })
 
 .controller('bioCtrl', function($scope, $rootScope) {
@@ -118,5 +149,5 @@ angular.module('app.controllers', [])
             })
 
 .controller('preferencesCtrl', function($scope, $rootScope) {
-            
+
             })
